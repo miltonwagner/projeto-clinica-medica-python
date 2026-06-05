@@ -6,7 +6,7 @@ paciente_bp = Blueprint("paciente", __name__)
 
 
 # =========================
-# 📌 LISTAR + CADASTRAR
+# 📌 LISTAR + CADASTRAR + BUSCAR
 # =========================
 @paciente_bp.route("/pacientes", methods=["GET", "POST"])
 def pacientes():
@@ -16,11 +16,20 @@ def pacientes():
 
     if request.method == "POST":
 
+        nome = request.form["nome"]
+        idade = request.form["idade"]
+        telefone = request.form["telefone"]
+        email = request.form["email"]
+
+        # Validação simples
+        if not nome or not email:
+            return "Nome e Email são obrigatórios"
+
         novo = Paciente(
-            nome=request.form["nome"],
-            idade=request.form["idade"],
-            telefone=request.form["telefone"],
-            email=request.form["email"]
+            nome=nome,
+            idade=idade,
+            telefone=telefone,
+            email=email
         )
 
         db.session.add(novo)
@@ -28,13 +37,51 @@ def pacientes():
 
         return redirect("/pacientes")
 
-    pacientes = Paciente.query.all()
+    busca = request.args.get("busca")
 
-    return render_template("pacientes.html", pacientes=pacientes)
+    if busca:
+        pacientes = Paciente.query.filter(
+            Paciente.nome.contains(busca)
+        ).all()
+    else:
+        pacientes = Paciente.query.all()
+
+    return render_template(
+        "pacientes.html",
+        pacientes=pacientes
+    )
 
 
 # =========================
-# 🗑 EXCLUIR PACIENTE (CORRIGIDO)
+# ✏ EDITAR PACIENTE
+# =========================
+@paciente_bp.route("/editar/<int:id>", methods=["GET", "POST"])
+def editar(id):
+
+    if not session.get("logado"):
+        return redirect("/login")
+
+    paciente = Paciente.query.get_or_404(id)
+
+    if request.method == "POST":
+
+        paciente.nome = request.form["nome"]
+        paciente.idade = request.form["idade"]
+        paciente.telefone = request.form["telefone"]
+        paciente.email = request.form["email"]
+
+        db.session.commit()
+
+        return redirect("/pacientes")
+
+    return render_template(
+        "editar_paciente.html",
+        paciente=paciente
+    )
+
+
+# =========================
+# 🗑 EXCLUIR PACIENTE
 # =========================
 @paciente_bp.route("/excluir/<int:id>")
 def excluir(id):

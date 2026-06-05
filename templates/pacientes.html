@@ -6,17 +6,59 @@
 
     <h2>Cadastro de Pacientes</h2>
 
-    <!-- FORMULÁRIO -->
+    <!-- FORMULÁRIO DE CADASTRO -->
     <form method="POST" class="mb-4">
 
-        <input name="nome" class="form-control mb-2" placeholder="Nome" required>
-        <input name="idade" class="form-control mb-2" placeholder="Idade">
-        <input name="telefone" class="form-control mb-2" placeholder="Telefone">
-        <input name="email" class="form-control mb-2" placeholder="Email">
+        <input
+            name="nome"
+            class="form-control mb-2"
+            placeholder="Nome"
+            required>
+
+        <input
+            name="idade"
+            type="number"
+            class="form-control mb-2"
+            placeholder="Idade">
+
+        <input
+            name="telefone"
+            class="form-control mb-2"
+            placeholder="Telefone">
+
+        <input
+            name="email"
+            type="email"
+            class="form-control mb-2"
+            placeholder="Email"
+            required>
 
         <button class="btn btn-success">
             Cadastrar Paciente
         </button>
+
+    </form>
+
+    <hr>
+
+    <!-- BUSCA -->
+    <h3>Pesquisar Paciente</h3>
+
+    <form method="GET" action="/pacientes" class="mb-4">
+
+        <div class="input-group">
+
+            <input
+                type="text"
+                name="busca"
+                class="form-control"
+                placeholder="Digite o nome do paciente">
+
+            <button class="btn btn-primary">
+                Buscar
+            </button>
+
+        </div>
 
     </form>
 
@@ -31,7 +73,7 @@
                 <th>Idade</th>
                 <th>Telefone</th>
                 <th>Email</th>
-                <th>Ações</th>
+                <th width="180">Ações</th>
             </tr>
         </thead>
 
@@ -40,17 +82,36 @@
         {% for p in pacientes %}
 
             <tr>
+
                 <td>{{ p.nome }}</td>
                 <td>{{ p.idade }}</td>
                 <td>{{ p.telefone }}</td>
                 <td>{{ p.email }}</td>
 
                 <td>
-                    <a href="/excluir/{{p.id}}"
+
+                    <!-- EDITAR -->
+                    <a href="/editar/{{ p.id }}"
+                       class="btn btn-warning btn-sm">
+                        Editar
+                    </a>
+
+                    <!-- EXCLUIR -->
+                    <a href="/excluir/{{ p.id }}"
                        class="btn btn-danger btn-sm"
                        onclick="return confirm('Deseja excluir este paciente?')">
                         Excluir
                     </a>
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+                <td colspan="5" class="text-center">
+                    Nenhum paciente encontrado.
                 </td>
             </tr>
 

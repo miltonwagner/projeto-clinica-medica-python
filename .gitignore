@@ -1,15 +1,30 @@
+# ==========================
 # Python
+# ==========================
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 
-# Ambiente virtual
+# ==========================
+# Ambiente Virtual
+# ==========================
 .venv/
+venv/
 
-# Banco de dados
-db.sqlite3
-
+# ==========================
 # PyCharm
+# ==========================
 .idea/
 
-# Outros
+# ==========================
+# Banco de Dados
+# ==========================
 instance/
+*.sqlite3
+
+# ==========================
+# Sistema Operacional
+# ==========================
+.DS_Store
+Thumbs.db

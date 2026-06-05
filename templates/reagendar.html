@@ -2,13 +2,66 @@
 
 {% block content %}
 
-<h2>Reagendar Consulta</h2>
+<div class="container mt-4">
 
-<form method="POST">
-    <input type="date" name="data" class="form-control mb-2" value="{{consulta.data}}">
-    <input type="time" name="hora" class="form-control mb-2" value="{{consulta.hora}}">
+    <div class="card shadow">
 
-    <button class="btn btn-success">Salvar</button>
-</form>
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Reagendar Consulta</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Nova Data
+                    </label>
+
+                    <input
+                        type="date"
+                        name="data"
+                        class="form-control"
+                        value="{{ consulta.data }}"
+                        required>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Novo Horário
+                    </label>
+
+                    <input
+                        type="time"
+                        name="hora"
+                        class="form-control"
+                        value="{{ consulta.hora }}"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+                    Salvar Alterações
+                </button>
+
+                <a
+                    href="/consultas"
+                    class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

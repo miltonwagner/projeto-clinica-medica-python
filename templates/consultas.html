@@ -2,49 +2,143 @@
 
 {% block content %}
 
-<h2>Consultas</h2>
+<div class="container mt-4">
 
-<table class="table table-striped table-hover">
+    <h2>Consultas Agendadas</h2>
 
-<thead class="table-dark">
-<tr>
-    <th>Paciente</th>
-    <th>Médico</th>
-    <th>Data</th>
-    <th>Hora</th>
-    <th>Status</th>
-    <th>Ações</th>
-</tr>
-</thead>
+    <!-- FILTRO -->
+    <form method="GET" action="/consultas" class="mb-4">
 
-<tbody>
+        <div class="row">
 
-{% for c in lista %}
+            <div class="col-md-4">
 
-<tr>
-    <td>{{ c.paciente.nome }}</td>
-    <td>{{ c.medico.nome }}</td>
-    <td>{{ c.data }}</td>
-    <td>{{ c.hora }}</td>
+                <select
+                    name="status"
+                    class="form-select">
 
-    <td>
-        {% if c.status == "Agendada" %}
-            <span class="badge bg-success">Agendada</span>
-        {% elif c.status == "Cancelada" %}
-            <span class="badge bg-danger">Cancelada</span>
-        {% endif %}
-    </td>
+                    <option value="">
+                        Todos os Status
+                    </option>
 
-    <td>
-        <a href="/cancelar/{{c.id}}" class="btn btn-warning btn-sm">Cancelar</a>
-        <a href="/reagendar/{{c.id}}" class="btn btn-primary btn-sm">Reagendar</a>
-    </td>
-</tr>
+                    <option value="Agendada">
+                        Agendada
+                    </option>
 
-{% endfor %}
+                    <option value="Cancelada">
+                        Cancelada
+                    </option>
 
-</tbody>
+                </select>
 
-</table>
+            </div>
+
+            <div class="col-md-2">
+
+                <button class="btn btn-primary">
+                    Filtrar
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+    <table class="table table-striped table-hover">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Status</th>
+                <th width="220">Ações</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for c in lista %}
+
+            <tr>
+
+                <td>{{ c.paciente.nome }}</td>
+
+                <td>{{ c.medico.nome }}</td>
+
+                <td>{{ c.data }}</td>
+
+                <td>{{ c.hora }}</td>
+
+                <td>
+
+                    {% if c.status == "Agendada" %}
+
+                        <span class="badge bg-success">
+                            Agendada
+                        </span>
+
+                    {% elif c.status == "Cancelada" %}
+
+                        <span class="badge bg-danger">
+                            Cancelada
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    {% if c.status == "Agendada" %}
+
+                        <a
+                            href="/reagendar/{{ c.id }}"
+                            class="btn btn-primary btn-sm">
+                            Reagendar
+                        </a>
+
+                        <a
+                            href="/cancelar/{{ c.id }}"
+                            class="btn btn-warning btn-sm"
+                            onclick="return confirm('Deseja realmente cancelar esta consulta?')">
+                            Cancelar
+                        </a>
+
+                    {% else %}
+
+                        <span class="text-muted">
+                            Sem ações
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    Nenhuma consulta encontrada.
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
 
 {% endblock %}

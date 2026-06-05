@@ -95,10 +95,19 @@ O sistema foi estruturado seguindo o padrão **MVC (Model-View-Controller)**, ga
 
 ### 🗂 Estrutura Completa do Projeto
 
+# 📂 Estrutura do Projeto
+
 ProjetoClinicaMedica/
 │
 ├── app.py
 ├── extensions.py
+├── README.md
+├── .gitignore
+│
+├── controllers/
+│   ├── __init__.py
+│   ├── paciente_controller.py
+│   └── consulta_controller.py
 │
 ├── models/
 │   ├── __init__.py
@@ -106,29 +115,148 @@ ProjetoClinicaMedica/
 │   ├── medico.py
 │   └── consulta.py
 │
-├── controllers/
-│   ├── paciente_controller.py
-│   └── consulta_controller.py
+├── instance/
+│   └── db.sqlite3
+│
+├── database/
 │
 ├── templates/
 │   ├── base.html
+│   ├── home.html
 │   ├── index.html
 │   ├── login.html
 │   ├── menu.html
 │   ├── pacientes.html
+│   ├── editar_paciente.html
 │   ├── consultas.html
 │   ├── agendar.html
-│   └── reagendar.html
+│   ├── reagendar.html
+│   ├── cadastrar.html
+│   ├── editar.html
+│   │
+│   └── errors/
+│       ├── 404.html
+│       └── 500.html
 │
 ├── static/
 │   ├── css/
 │   │   └── style.css
+│   │
 │   └── img/
+│       ├── agendar.png
 │       ├── clinica.jpg
-│       └── logo.jpg
+│       ├── consultas.png
+│       ├── email.png
+│       ├── home.png
+│       ├── login.png
+│       ├── logo.jpg
+│       ├── menu.png
+│       └── pacientes.png
 │
 ├── utils/
-│   ├── email_servi
+│   ├── email_service.py
+│   └── lembrete.py
+
+---
+
+## 📁 Descrição das Pastas
+
+### 📌 controllers/
+
+Responsável pelo controle das rotas e regras de negócio da aplicação.
+
+Arquivos:
+
+- paciente_controller.py
+- consulta_controller.py
+
+---
+
+### 📌 models/
+
+Contém as entidades do sistema e o mapeamento ORM realizado pelo SQLAlchemy.
+
+Entidades:
+
+- Paciente
+- Médico
+- Consulta
+
+---
+
+### 📌 templates/
+
+Contém todas as páginas HTML desenvolvidas utilizando Jinja2.
+
+Principais telas:
+
+- Página inicial
+- Login
+- Menu principal
+- Cadastro de pacientes
+- Edição de pacientes
+- Agendamento de consultas
+- Reagendamento de consultas
+- Listagem de consultas
+
+Também contém páginas de tratamento de erros:
+
+- 404.html
+- 500.html
+
+---
+
+### 📌 static/
+
+Arquivos estáticos utilizados pelo sistema.
+
+Inclui:
+
+- Folhas de estilo CSS
+- Logotipo da clínica
+- Capturas de tela utilizadas na documentação
+
+---
+
+### 📌 utils/
+
+Serviços auxiliares utilizados pela aplicação.
+
+Arquivos:
+
+- email_service.py → responsável pelo envio de emails.
+- lembrete.py → responsável pelo envio de lembretes automáticos.
+
+---
+
+### 📌 instance/
+
+Contém o banco de dados SQLite utilizado pelo sistema.
+
+Arquivo:
+
+- db.sqlite3
+
+---
+
+### 📌 app.py
+
+Arquivo principal da aplicação Flask.
+
+Responsável por:
+
+- Inicialização do sistema
+- Registro dos Blueprints
+- Configuração do banco de dados
+- Configuração das rotas principais
+- Tratamento de erros
+
+---
+
+### 📌 extensions.py
+
+Arquivo responsável pela configuração e inicialização do SQLAlchemy.
+
 
 # ⚙️ Funcionalidades Implementadas
 
@@ -138,12 +266,15 @@ ProjetoClinicaMedica/
 
 ## 🧑‍⚕️ Gestão de Pacientes
 - Cadastro de pacientes
+- Edição de pacientes
+- Exclusão de pacientes
+- Pesquisa por nome
 - Listagem dinâmica
-- Exclusão com confirmação
 
 ## 👨‍⚕️ Gestão de Médicos
-- Cadastro automático (seed)
-- Associação com especialidades
+- Cadastro automático de médicos na inicialização do sistema
+- Associação de especialidades médicas
+- Utilização nas rotinas de agendamento de consultas
 
 ## 📅 Agendamento de Consultas
 - Seleção de paciente
@@ -152,9 +283,12 @@ ProjetoClinicaMedica/
 - Interface com lista dinâmica e scroll
 
 ## 📋 Painel de Consultas
+
 - Visualização estruturada
 - Relacionamento paciente ↔ médico
-- Exclusão de consultas
+- Filtro por status
+- Cancelamento de consultas
+- Reagendamento de consultas
 
 ## 🔗 Relacionamentos (ORM)
 - Uso de `ForeignKey`
@@ -169,21 +303,52 @@ ProjetoClinicaMedica/
 - Verificação de consultas futuras
 - Disparo automático de notificações
 
+## ⚠ Tratamento de Erros
+O sistema possui páginas personalizadas para:
+- Erro 404 (Página não encontrada)
+- Erro 500 (Erro interno do servidor)
+
+Arquivos:
+templates/errors/404.html
+templates/errors/500.html
 ---
 
 # 📋 Requisitos Atendidos
 
 | Requisito | Status |
-|----------|--------|
-| Painel de Agendamento | ✔ Implementado |
-| Calendário (data/hora) | ✔ Implementado |
-| Seleção de médico/especialidade | ✔ Implementado |
-| Cadastro de paciente | ✔ Implementado |
-| Confirmação por email | ✔ Implementado |
-| Lembretes | ✔ Implementado |
-| Cancelamento/Reagendamento | ✔ Implementado |
+|------------|---------|
+| Login e Sessões | ✅ |
+| CRUD de Pacientes | ✅ |
+| Busca de Pacientes | ✅ |
+| CRUD de Consultas | ✅ |
+| Filtro de Consultas | ✅ |
+| Cancelamento e Reagendamento | ✅ |
+| SQLAlchemy ORM | ✅ |
+| SQLite | ✅ |
+| Arquitetura MVC | ✅ |
+| Bootstrap | ✅ |
+| Templates Jinja2 | ✅ |
+| Relacionamentos ORM | ✅ |
+| Envio de E-mail | ✅ |
+| Lembretes Automáticos | ✅ |
+| Tratamento de Erros 404 e 500 | ✅ |
 
 ---
+# 📦 Dependências do Projeto
+
+Instalação automática:
+
+```bash
+pip install -r requirements.txt
+```
+
+Principais dependências:
+
+- Flask
+- Flask-SQLAlchemy
+- SQLite
+- Bootstrap
+
 
 # 🚀 Execução do Projeto
 
@@ -239,6 +404,15 @@ O sistema demonstra:
 
 Trata-se de uma implementação consistente para nível acadêmico, com aproximação de 
 práticas reais de mercado.
+
+# 🔮 Melhorias Futuras
+
+- Cadastro de usuários no banco de dados
+- Controle de permissões por perfil
+- Paginação de registros
+- Relatórios em PDF
+- Dashboard com indicadores
+- Integração com APIs de calendário
 
 ---
 
