@@ -28,9 +28,28 @@
         button {
             width: 95%;
             padding: 10px;
-            background: #3498db;
             color: white;
             border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn-login {
+            background: #3498db;
+        }
+
+        .btn-login:hover {
+            background: #2980b9;
+        }
+
+        .btn-voltar {
+            background: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        .btn-voltar:hover {
+            background: #636e72;
         }
     </style>
 </head>
@@ -45,10 +64,20 @@
     <h2>Clínica Médica</h2>
 
     <form method="POST">
+
         <input name="usuario" placeholder="Usuário">
         <input name="senha" type="password" placeholder="Senha">
-        <button>Entrar</button>
+
+        <!-- BOTÃO LOGIN -->
+        <button class="btn-login" type="submit">Entrar</button>
+
     </form>
+
+    <!-- BOTÃO VOLTAR (CORRETO E FUNCIONANDO) -->
+    <button class="btn-voltar" type="button"
+            onclick="window.location.href='/'">
+        ← Voltar para página inicial
+    </button>
 
 </div>
 
