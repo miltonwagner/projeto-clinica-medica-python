@@ -95,8 +95,9 @@ O sistema foi estruturado seguindo o padrão **MVC (Model-View-Controller)**, ga
 
 ### 🗂 Estrutura Completa do Projeto
 
-# 📂 Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
+```text
 ProjetoClinicaMedica/
 │
 ├── app.py
@@ -134,7 +135,7 @@ ProjetoClinicaMedica/
 │   ├── cadastrar.html
 │   ├── editar.html
 │   │
-│   └── errors/
+│   └── erros/
 │       ├── 404.html
 │       └── 500.html
 │
@@ -153,11 +154,10 @@ ProjetoClinicaMedica/
 │       ├── menu.png
 │       └── pacientes.png
 │
-├── utils/
-│   ├── email_service.py
-│   └── lembrete.py
-
----
+└── utils/
+    ├── email_service.py
+    └── lembrete.py
+```
 
 ## 📁 Descrição das Pastas
 
